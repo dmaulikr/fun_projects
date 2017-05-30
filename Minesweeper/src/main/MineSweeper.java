@@ -2,6 +2,7 @@ package main;
 
 import java.util.Scanner;
 
+//Litao Chen		2017.05.29
 // Terminal version of MineSweeper game 
 // difficulty	No. of mines	board size:
 // easy:		10				8X8	
@@ -9,9 +10,17 @@ import java.util.Scanner;
 // expert:		99				16X30
 
 
+//HELP:
+//	The board will show in the terminal 
+//	input row index and column index (with space in between) to open the spot. e.g.: 2 6
+//	add 'f' at the beginning if want to flag the spot. e.g.: f 2 6
+//	press 's' to ask AI give suggestions for next move
+
+
+
 public class MineSweeper {
-	// index array to store user's input: row, col, flag
-	private static int[] index = {0, 0, 0};
+	// index array to store user's input: row, col, flag, isAI
+	private static int[] cmd = {0, 0, 0};
 	private static Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args) {
@@ -21,16 +30,19 @@ public class MineSweeper {
 		Board newBoard = new Board(level);
 		newBoard.printBoard(0);
 
-		String pattern = "^[fF]?[ ]*[0-9]{1,2}[ ]+[0-9]{1,2}[ ]*$";
+		String pattern = "^[ ]*[sSfF]?[ ]*[0-9]{1,2}[ ]+[0-9]{1,2}[ ]*$";
+		String help = "^[ ]*[hH]{1}[ ]*$";
+		String AI = "^[ ]*[sS]{1}[ ]*$";
 		
 		while(sc.hasNextLine()) {
 			String input = sc.nextLine();
-			if(input.equals("h") || input.equals("H") ) {
+			if(input.matches(help) )
 				help();
-			}
+			else if(input.matches(AI))
+				newBoard.printBoard(2);
 			else if(input.matches(pattern)) {
-				processInput(input, index);
-				int result = newBoard.updateBoard(index[0], index[1], index[2] );
+				processInput(input, cmd);
+				int result = newBoard.updateBoard(cmd[0], cmd[1], cmd[2]);
 				switch(result){
 				case -1: 	System.out.println("Invalid position. please retry."); break; 
 				case 1:		System.out.println("Congrat! You win!"); restart(newBoard, sc); break;
@@ -50,14 +62,15 @@ public class MineSweeper {
 		System.out.println(
 			"The board will show in the terminal\n" + 
 			"input row index and column index (with space in between) to open the spot. e.g.: 2 6\n" +
-			"add 'f' at the begining if want to flag the spot. e.g.: f 2 6"
+			"add 'f' at the beginning if want to flag the spot. e.g.: f 2 6\n"+
+			"press 's' to ask AI give suggestions for next move."
 				);
 	}
 	
 	// process user's input
 	// the index array should have at least length 2
 	static void processInput(String s, int[] index) {
-		String[] token = s.split("\\s+");
+		String[] token = s.trim().split("\\s+");
 		if(token[0].equals("f") || token[0].equals("F")) {
 			index[0] = Integer.parseInt(token[1]);
 			index[1] = Integer.parseInt(token[2]);

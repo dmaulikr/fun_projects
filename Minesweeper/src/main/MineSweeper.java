@@ -2,7 +2,7 @@ package main;
 
 import java.util.Scanner;
 
-//Litao Chen		2017.05.29
+//Litao Chen		2017.05.30
 // Terminal version of MineSweeper game 
 // difficulty	No. of mines	board size:
 // easy:		10				8X8	

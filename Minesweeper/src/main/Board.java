@@ -2,8 +2,10 @@ package main;
 
 import java.util.Random;
 
+import org.omg.CORBA.Current;
 
-// Litao Chen		2017.05.30
+
+// Litao Chen		2017.06.02
 // Terminal version of MineSweeper game 
 // difficulty		No. of mines	board size:
 // easy:			10				8X8	
@@ -11,28 +13,17 @@ import java.util.Random;
 // expert:			99				16X30
 
 // ***************************************************************************************************************
-// This board contains a simple AI to help user select next move
+// This board contains a simple AI to help user select next move. [ AI v3.0 ]
 // Basic idea: 
-// - The key is to find out definitive risk like 100 and 0. Then based on these risk numbers to 
-//   calculate the risk of unknown spots.
-// - use known hint to calculate risk of each unopened spot, simply even distribution of the risk.
-//
-// - To improve accuracy, before normal evaluation, do the risk evaluation in the order of:
-//   -> go over the board to find easy mines: like hint is two and you got 2 unopened spots around it
-//
-//   -> go over the board to exclude non-mine spot:	like the undistributed risk is 0 but there are unopened spots
-//      *: It is important to limit the second step to the spots with known mines
-//           Otherwise you may get many false no-risk spot!!!
-//
-//   -> go over the board to find the spot like you have 1 mine and two spots waiting. Consider these two spots as
-// 		one mine, check surrounding spots to utilize this info to find more 100 or 0.
-//   -> start the normal evaluation.
+// - Mimic the way human brain solves the problem 
+//   -> scan the board to find easy mines or exclude a spot to be a mine, 
+//       or two spots that definitely contains one mine in them.
+//   -> once above case appears, search around that spot to see if we can find more new cases.
+//   -> the above process happens recursively to find more mines.
+//   -> If above process ends with no confirmed safe spot, do normal evaluation, which is
+//      not accurate (sometimes misleading) but most of the time helpful.
 //
 //  Over all this AI works quite well, despite sometimes you got fake 0 risk spots. Have fun!
-//  Improvment can be done:
-//  - add more routines to the evaluation process, like two or three consecutive "1"s.
-//  - go to more advanced data sutrcture like ArraySet<> to sort and process the easy spots at the beginning
-//  - those changes can improve algorithm speed and accuracy.
 // **************************************************************************************************************
 
 public class Board {
@@ -170,8 +161,6 @@ public class Board {
 			System.out.println("");
 			printHorzLine(boardToPrint[0].length); // bottom line separator
 		}
-		if(mode == 2) 
-			nextStep();
 	}
 
 	// print the required content based on the status of the spot
@@ -257,9 +246,9 @@ public class Board {
 		else // user want to flag / unflag this spot as a mine
 			selectedBoard[rowIndex][colIndex][3] = 
 						(selectedBoard[rowIndex][colIndex][3] == 1)? 0 : 1;  // update flag
+		printBoard(0);
 		
 		resetRisk();  // prepared for next round of AI risk evaluation.
-		printBoard(0);
 		AI();
 		
 //		for test
@@ -293,13 +282,24 @@ public class Board {
 	void resetRisk() {
 		safeSpot[2] = 100; // set safeZone risk to 100 to prepare for getting next safe move
 		
+		boolean hasLoadSafeSpot = false;
+		
 		for(int i = 0; i < boardForAI.length; i++) {
 			for(int j = 0; j < boardForAI[0].length; j++) {
-				// keep the confident result, don't keep 0 to simplify getting safeSpot info
-				if( boardForAI[i][j][0] < 100 || boardForAI[i][j][0] != 0)  // keep 100 and 0
+				// keep the confident result
+				if( boardForAI[i][j][0] != 100 && boardForAI[i][j][0] != 0)  // keep 100 and 0
 					boardForAI[i][j][0] = -1;  //reset risk after each move
+				
+				if(!hasLoadSafeSpot) {
+					if(boardForAI[i][j][1] == 0 && boardForAI[i][j][0] == 0){  // load one unvisited safe spot
+						safeSpot[0] = i;
+						safeSpot[1] = j;
+						safeSpot[2] = 0;
+						hasLoadSafeSpot = true;
+					}
+				}
 			}
-		}		
+		}	
 	}
 
 	// do the work when opening a spot
@@ -314,25 +314,51 @@ public class Board {
 	}
 	
 	
-	// AI function to evaluate risk of each spot
+	// AI function to decide next move. 
+	// It marks mine or safe spot and evaluate possible risks of unopened spot as suggestion.
 	void AI() {
-		findEasyMines();  //find the obvious mines
-		excludeSpots();   // exclude the obvious non-mine spot
-		excludewithOneMine();  // evaluate when we know some two spots have one mine
-		
-		for(int i = 0; i < boardForAI.length; i++) {  // go over each row
-			for(int j = 0; j < boardForAI[0].length; j++) {  // go over each column
-				if(boardForAI[i][j][1] == 1)  // visited spot
-					evalRisk(i, j);
+		if(safeSpot[2] == 0) {  // find safe spot
+			nextStep();		// directly go to the safe spot 
+			return;
+		}
+
+		for(int i = 0; i < boardForAI.length; i++) {  // go over rows
+			for(int j = 0; j < boardForAI[0].length; j++) {  // go over cells
+				if(boardForAI[i][j][1] != 0)  // visited spot
+					markOrExcludeSpot(i, j);
 			}
 		}
+		
+		if(safeSpot[2] != 0) {  // did not find safe spot
+			for(int i = 0; i < boardForAI.length; i++) {  // go over each row
+				for(int j = 0; j < boardForAI[0].length; j++) {  // go over each column
+					if(boardForAI[i][j][1] == 1)  // visited spot
+						evalRisk(i, j);
+				}
+			}			
+		}
+		
+		printBoard(2);
+		nextStep();
 	}
 	
+	
+	// check and mark spots as mine or empty
+	void markOrExcludeSpot(int rowIndex, int colIndex) {
+		int result = isSpecialSpot(rowIndex, colIndex);
+		
+		switch(result) {
+		case 1: markSurroundingSpots(rowIndex, colIndex, 100); break;
+		case 2: markSurroundingSpots(rowIndex, colIndex, 0); break;
+		case 3: evalWithOneMine(rowIndex, colIndex); break;
+		}
+	}
+
+
 	// check if current spot is special spot including:
 	// all unevaluated spots are mine. Mark all as mines
 	// 0% remain risk with unevaluated spots. Can exclude directly
 	// 1 mine with two spots. will use these info to evaluate other cells.
-	// 50% risk spot (unassigned spots can be given risk of 50) with hint 1
 	// rets: 0 for not special, 1 for 100% are mines, 2 for 0% risk spots, 3 for 1 mine two spots.
 	int isSpecialSpot(int rowIndex, int colIndex) {
 		int hint = boardForAI[rowIndex][colIndex][2];
@@ -358,86 +384,81 @@ public class Board {
 	}
 
 	
-	// scan the board to find 100% confirmed mines
-	void findEasyMines() {
-		for(int i = 0; i < boardForAI.length; i++) { // each row
-			for(int j = 0; j < boardForAI[0].length; j++) { //each spot
-				if(boardForAI[i][j][1] == 1) {  //visited spot
-					if(boardForAI[i][j][2] != 0 && isSpecialSpot(i, j) == 1)
-						markEasyMines(i, j, 100);
+	// maker spot with certain risk
+	// risk: 100 mine, 0 for not mine, 50 for 1 hint two spots
+	void markSurroundingSpots(int rowIndex, int colIndex, int risk) {	
+		for(int i = rowIndex-1; i <= rowIndex + 1; i++) {  //surrounding rows
+			if(i < 0 || i >= boardForAI.length)  //out of boundary
+				continue;
+			for(int j = colIndex-1; j <= colIndex+1; j++) {  //surrounding columns
+				if(j < 0 || j >= boardForAI[0].length 		//out of boundary
+						 || (i == rowIndex && j == colIndex) ) // Current spot itself
+					continue;
+				if(boardForAI[i][j][1] == 0 && boardForAI[i][j][0] == -1)  { // unvisited spot risk not assigned
+					boardForAI[i][j][0] = risk;
+					storeSaftestSpot(i, j);
+				}
+			}
+		}
+		searchAround(rowIndex, colIndex);
+	}
+
+
+	// search the surrounding spots to see if we can find mines or exclude spots
+	void searchAround(int rowIndex, int colIndex) {
+		for(int i = rowIndex-1; i <= rowIndex + 1; i++) {  //surrounding rows
+			if(i < 0 || i >= boardForAI.length)  //out of boundary
+				continue;
+			for(int j = colIndex-1; j <= colIndex+1; j++) {  //surrounding columns
+				if(j < 0 || j >= boardForAI[0].length 		//out of boundary
+						 || (i == rowIndex && j == colIndex) ) // Current spot itself
+						continue;
+				if(boardForAI[i][j][1] == 1)	{ // visited spot
+					markOrExcludeSpot(i, j);
 				}
 			}
 		}
 	}
 
 
-	// Exclude spots (remainRisk=0)
-	void excludeSpots() {
-		for(int i = 0; i < boardForAI.length; i++) { // each row
-			for(int j = 0; j < boardForAI[0].length; j++) { //each spot
-				if(boardForAI[i][j][1] == 1) {  //visited spot
-				if(isSpecialSpot(i, j) == 2)
-						markEasyMines(i, j, 0);
-				}
-			}
-		}		
-	}
-
-
-	// find the two spots that there definitely is one mine in them and update surrounding spots
-	void excludewithOneMine() {
-		for(int i = 0; i < boardForAI.length; i++) { // each row
-			for(int j = 0; j < boardForAI[0].length; j++) { //each spot
-				if(boardForAI[i][j][1] == 1) {  //visited spot
-				if(isSpecialSpot(i, j) == 3)
-						findMoreMines(i, j);
-				}
-			}
-		}		
-	}
-
-
-	// find the relative spots around the 1-mine-two-spots spot and evaluate them
-	// with the info that two of the spots are one mine.
-	// input: the spots that has one mine left and two unevaluated spots
-	void findMoreMines(int rowIndex, int colIndex) {
+	// set the two spots risk to 50.
+	// evaluate the surrounding spot spots by considering the two spots as one mine
+	void evalWithOneMine(int rowIndex, int colIndex) {
 		// store the two spots as a mine and the spots to evaluate
 		// content: spot1-row, spot1-column, spot2-row, spot2-column
-		int[] mineLoc = new int[4]; 
+		int[] mineLoc = findtheTwoSpots(rowIndex, colIndex);
+		int[][] spotList = findCentralSpot(mineLoc);
 		
-		findtheTwoSpots(rowIndex, colIndex, mineLoc);
-		
-		// an array to store the possible index of the interest spot. -1 as blank mark
-		int[][] spotList = {{-1, -1, -1},{-1, -1, -1}};
-		int deltaRow = Math.abs(mineLoc[0] - mineLoc[2]);
-		int deltaCol = Math.abs(mineLoc[1] - mineLoc[3]);
-		
-		switch(deltaRow) {
-		case 0: spotList[0][0] = mineLoc[0] - 1; 
-				spotList[0][1] = mineLoc[0];
-				spotList[0][2] = mineLoc[0] + 1; break;
-		case 1: spotList[0][0] = mineLoc[0]; 
-				spotList[0][1] = mineLoc[0] + 1; break;
-		case 2: spotList[0][0] = Math.max(mineLoc[0], mineLoc[2]) - 1; break;
+		for(int i = 0; i < spotList.length; i++) {  // go through each location		
+			if(spotList[i][0] == -1) // no more entry
+				break;
+			
+			int row = spotList[i][0]; int col = spotList[i][1];
+			if(row < 0 || row >= boardForAI.length || col < 0 || col >= boardForAI[0].length)
+				continue;  // out of boundary, go to the next one
+			
+			if(boardForAI[row][col][1] == 1 && boardForAI[row][col][3] > 2){ // visited spot, >=3 unopened spots
+				// Temporarily set the risks to 50. will erase later on
+				boardForAI[mineLoc[0]][mineLoc[1]][0] = 50;
+				boardForAI[mineLoc[2]][mineLoc[3]][0] = 50;
+				
+				int result = isSpecialSpot(rowIndex, colIndex);	
+				switch(result) {
+				case 1: markSurroundingSpots(rowIndex, colIndex, 100); break;
+				case 2: markSurroundingSpots(rowIndex, colIndex, 0); break;
+				}
+				
+				//reset the risk of these two spots
+				boardForAI[mineLoc[0]][mineLoc[1]][0] = -1;
+				boardForAI[mineLoc[2]][mineLoc[3]][0] = -1;
+			}	
 		}
-		
-		switch(deltaCol) {
-		case 0: spotList[0][0] = mineLoc[1] - 1; 
-				spotList[0][1] = mineLoc[1];
-				spotList[0][2] = mineLoc[1] + 1; break;
-		case 1: spotList[0][0] = mineLoc[1]; 
-				spotList[0][1] = mineLoc[1] + 1; break;
-		case 2: spotList[0][0] = Math.max(mineLoc[1], mineLoc[3]) - 1; break;
-		}
-		
-		// process one by one. the method below will do the validation of the index
-		evalWithOneMine(spotList, mineLoc);
 	}
-	
-	
+
+
 	// find the two spots that can be considered as a mine
-	// the array mineInfo is passed in to store the result
-	void findtheTwoSpots(int rowIndex, int colIndex, int[] mineInfo) {
+	int[] findtheTwoSpots(int rowIndex, int colIndex) {
+		int[] mineLoc = new int[4];
 		int pos = 0;  // put the first location at spot 0 of the result array
 		
 		for(int i = rowIndex-1; i <= rowIndex + 1; i++) {  //surrounding rows
@@ -448,64 +469,67 @@ public class Board {
 						 || (i == rowIndex && j == colIndex) ) // Current spot itself
 						continue;
 				if(boardForAI[i][j][1] == 0 && boardForAI[i][j][0] == -1)	{ // unvisited, risk not assigned
-					mineInfo[pos++] = i;
-					mineInfo[pos++] = j;
-				}
-			}
-		}	
-	}
-
-	
-	// evaluate the spots by considering the two spots passed in as one mine
-	// the content of the array: spot1-row, spot1-column, spot2-row, spot2-column
-	void evalWithOneMine(int[][] spotList, int[] mineLoc) {
-		// Temporarily set the risks to 50. will erase later on
-		boardForAI[mineLoc[0]][mineLoc[1]][0] = 50;
-		boardForAI[mineLoc[2]][mineLoc[3]][0] = 50;
-		
-		for(int i = 0; i < 3; i++) {  // go over possible row index
-			if(spotList[0][i] < 0 || spotList[0][i] >= boardForAI.length)  // out of boundary
-				continue;
-			for(int j = 0; j < 3; j++) { // go over possible column index
-				if(spotList[1][j] < 0 || spotList[1][j] >= boardForAI[0].length)  // out of boundary
-					continue;
-				if(boardForAI[i][j][1] == 1 && boardForAI[i][j][3] > 2){ //visited spot and has mines around
-					findEasyMines();
-					excludeSpots();
+					mineLoc[pos++] = i;
+					mineLoc[pos++] = j;
 				}
 			}
 		}
-		
-		//reset the risk of these two spots
-		boardForAI[mineLoc[0]][mineLoc[1]][0] = -1;
-		boardForAI[mineLoc[2]][mineLoc[3]][0] = -1;
+		return mineLoc;
 	}
-	
 
-	// maker easy mines around current spot
-	// risk: 50 for 50% risk, 100 for 100 risk
-	void markEasyMines(int rowIndex, int colIndex, int risk) {
-		for(int i = rowIndex-1; i <= rowIndex + 1; i++) {  //surrounding rows
-			if(i < 0 || i >= boardForAI.length)  //out of boundary
-				continue;
-			for(int j = colIndex-1; j <= colIndex+1; j++) {  //surrounding columns
-				if(j < 0 || j >= boardForAI[0].length 		//out of boundary
-						 || (i == rowIndex && j == colIndex) ) // Current spot itself
-						continue;
-				if(boardForAI[i][j][1] == 0)  { // unvisited spot
-					if(risk == 100 && boardForAI[i][j][0] != 100)  // 100 has the priority
-						boardForAI[i][j][0] = risk;
-					else if( boardForAI[i][j][0] == -1) // has not been assigned a risk
-						boardForAI[i][j][0] = risk;
-					storeSaftestSpot(i, j);
-				}
-			}
-		}		
+
+	// find the possible location of the central spot from the given two spots
+	int[][] findCentralSpot(int[] mineLoc) {
+		int r1 = mineLoc[0]; int c1 = mineLoc[1];
+		int r2 = mineLoc[2]; int c2 = mineLoc[3];
+		int rMid = (r1 + r2)/2; int cMid = (c1 + c2)/2;
+		
+		// an array to store the possible index of the interest spot. -1 as blank mark
+		// maximum 4 possible positions of the central spot
+		int[][] spotList = {{-1, -1},{-1, -1},{-1, -1},{-1, -1}};
+		
+		int deltaRow = Math.abs(r1 - r2);
+		int deltaCol = Math.abs(c1 - c2);
+		
+		// a index to simplify the following switch statement 2D to 1D
+		// index 0 and 8 can be excluded directly by using default segment
+		int index = deltaRow*3 + deltaCol;
+		
+		switch(index) {
+		case 1: spotList[0][0] = r1-1; 	spotList[0][1] = c1;
+				spotList[1][0] = r1-1; 	spotList[1][1] = c2;
+				spotList[2][0] = r1+1; 	spotList[2][1] = c1;
+				spotList[3][0] = r1+1; 	spotList[3][1] = c2; break;
+				
+		case 2: spotList[0][0] = r1-1; 	spotList[0][1] = cMid;
+				spotList[1][0] = r1;   	spotList[1][1] = cMid;
+				spotList[2][0] = r1+1; 	spotList[2][1] = cMid; break;
+				
+		case 3: spotList[0][0] = r1; 	spotList[0][1] = c1-1;
+				spotList[1][0] = r1;   	spotList[1][1] = c1+1;
+				spotList[2][0] = r2; 	spotList[2][1] = c1-1;
+				spotList[3][0] = r2; 	spotList[3][1] = c1+1; break;
+		
+		case 4: spotList[0][0] = r1; 	spotList[0][1] = c2;
+				spotList[1][0] = r2;   	spotList[1][1] = c1; break;
+		
+		case 5: spotList[0][0] = r1; 	spotList[0][1] = cMid;
+				spotList[1][0] = r2;   	spotList[1][1] = cMid; break;
+		
+		case 6: spotList[0][0] = rMid; 	spotList[0][1] = c1-1;
+				spotList[1][0] = rMid;  spotList[1][1] = c1;
+				spotList[2][0] = rMid; 	spotList[2][1] = c1+1; break;
+		
+		case 7: spotList[0][0] = rMid; 	spotList[0][1] = c1;
+				spotList[1][0] = rMid;  spotList[1][1] = c2; break;
+		default: ;
+		}	
+		return spotList;
 	}
 
 
 	// helper function to evaluate the risk of unvisited spots around current position.
-	// check for special case to lock the confirmed mines
+	// the risk calculated from here is just as suggestion, will not be used for next move
 	void evalRisk(int rowIndex, int colIndex) {
 		int hint = boardForAI[rowIndex][colIndex][2];
 		int blindSpots = boardForAI[rowIndex][colIndex][3];
@@ -513,13 +537,8 @@ public class Board {
 		int[] knownRisk = getKnownRisk(rowIndex, colIndex);
 		if (blindSpots == 0 || blindSpots == knownRisk[0]) // all are opened or assigned
 			return;
-	
-		// a patch to avoid wrong zero risk for 1 hint spot (not perfect solution, just reduce error rate)
-		if((hint*100 - knownRisk[1]) == 0 && hint == 1)  
-			return;
+
 		int remainAvgRisk = (hint*100 - knownRisk[1])/(blindSpots - knownRisk[0]);
-		if(remainAvgRisk < 0)
-			remainAvgRisk = 0;
 		
 		for(int i = rowIndex-1; i <= rowIndex + 1; i++) {  //surrounding rows
 			if(i < 0 || i >= boardForAI.length)  //out of boundary
@@ -528,8 +547,8 @@ public class Board {
 				if(j < 0 || j >= boardForAI[0].length)  //out of boundary
 					continue;
 				if(boardForAI[i][j][1] == 0 && boardForAI[i][j][0] == -1) {  //unvisited and unassigned spot
-						boardForAI[i][j][0] = remainAvgRisk;   // assign left risk
-						storeSaftestSpot(i, j);
+					boardForAI[i][j][0] = remainAvgRisk;   // assign left risk
+					storeSaftestSpot(i, j);
 				}
 			}
 		}
@@ -547,7 +566,7 @@ public class Board {
 				if(j < 0 || j >= boardForAI[0].length 		//out of boundary
 						 || (i == rowIndex && j == colIndex) ) // Current spot itself
 						continue;
-				if(boardForAI[i][j][0] != -1)	{ // risk has been assigned
+				if(boardForAI[i][j][1] == 0 && boardForAI[i][j][0] != -1)	{ // unvisited and risk has been assigned
 					knownRisk[0] ++;
 					knownRisk[1] += boardForAI[i][j][0];
 				}
@@ -599,14 +618,13 @@ public class Board {
 			safeSpot[0], safeSpot[1], safeSpot[2]);
 		}
 		else {
-			System.out.printf("One safest move is:%d-%d, with the risk of: %d\n", 
+			System.out.printf("One safe move is:%d-%d, with the risk of: %d\n", 
 					safeSpot[0], safeSpot[1], safeSpot[2]);
 			
-// the section below is for test.
-//			int i = safeSpot[0];
-//			int j = safeSpot[1];
-//			resetRisk();
-//			updateBoard(i, j, 0);			
+// the section below is for test. comment it to allow user to select next move, even for safe move.
+			int i = safeSpot[0];
+			int j = safeSpot[1];
+			updateBoard(i, j, 0);
 		}
 	}
 	

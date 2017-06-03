@@ -255,9 +255,11 @@ public class Board {
 		resetRisk();  // prepared for next round of AI risk evaluation.
 		AI();
 		
-		if(autoSolve)
-			printBoard(2);   // show evaluation and go to next step
-		
+		if(autoSolve && safeSpot[2] == 0) {  // auto-solve is on and it is safe to make the move
+			printBoard(2);   									// show evaluation and suggestion
+			return updateBoard(safeSpot[0], safeSpot[1], 0);	// and take next move		
+		}
+
 		return 0;
 	}
 	
@@ -618,7 +620,7 @@ public class Board {
 		}
 	}
 
-	// suggest next step and take action if auto-solve is on
+	// suggest next step
 	void nextStep() {
 		if( safeSpot[2] != 0 ) {  // not 100% safe
 			if(safeSpot[2] > 20)  // based on experience
@@ -631,12 +633,6 @@ public class Board {
 		else {
 			System.out.printf("One safe move is:%d-%d, with the risk of: %d\n", 
 					safeSpot[0], safeSpot[1], safeSpot[2]);
-			
-			if(autoSolve) {
-				int i = safeSpot[0];
-				int j = safeSpot[1];
-				updateBoard(i, j, 0);
-			}
 		}
 	}
 	

@@ -2,9 +2,6 @@ package main;
 
 import java.util.Random;
 
-import org.omg.CORBA.Current;
-
-
 // Litao Chen		2017.06.02
 // Terminal version of MineSweeper game 
 // difficulty		No. of mines	board size:
@@ -18,7 +15,8 @@ import org.omg.CORBA.Current;
 // - Mimic the way human brain solves the problem 
 //   -> scan the board to find easy mines or exclude a spot to be a mine, 
 //       or two spots that definitely contains one mine in them.
-//   -> once above case appears, search around that spot to see if we can find more new cases.
+//   -> mark the spot with corresponding risk like 100 or 0 or 50, 
+//      search around that spot to see if we can find more new cases.
 //   -> the above process happens recursively to find more mines.
 //   -> If above process ends with no confirmed safe spot, do normal evaluation, which is
 //      not accurate (sometimes misleading) but most of the time helpful.
@@ -27,6 +25,9 @@ import org.omg.CORBA.Current;
 // **************************************************************************************************************
 
 public class Board {
+	// switch of auto-solving by AI (if safe spot was found)
+	boolean autoSolve = false;
+	
 	// marks for mines and flags
 	private static final char MINE = '#';
 	private static final char FLAG = '&';
@@ -144,7 +145,8 @@ public class Board {
 	
 	
 	// print the board in terminal
-	// mode: 0 for normal, 1 for solution after game over or win, 2 for printing AIBoard
+	// mode: 0 for normal, 1 for solution after game over or win, 
+	// 2 for printing AIBoard and suggest next move.
 	void printBoard(int mode) {
 		int[][][] boardToPrint = (mode == 2)? boardForAI : selectedBoard;
 
@@ -161,6 +163,8 @@ public class Board {
 			System.out.println("");
 			printHorzLine(boardToPrint[0].length); // bottom line separator
 		}
+		if(mode == 2)
+			nextStep();
 	}
 
 	// print the required content based on the status of the spot
@@ -251,9 +255,9 @@ public class Board {
 		resetRisk();  // prepared for next round of AI risk evaluation.
 		AI();
 		
-//		for test
-//		printBoard(2);
-//		nextStep();
+		if(autoSolve)
+			printBoard(2);   // show evaluation and go to next step
+		
 		return 0;
 	}
 	
@@ -317,10 +321,8 @@ public class Board {
 	// AI function to decide next move. 
 	// It marks mine or safe spot and evaluate possible risks of unopened spot as suggestion.
 	void AI() {
-		if(safeSpot[2] == 0) {  // find safe spot
-			nextStep();		// directly go to the safe spot 
+		if(safeSpot[2] == 0) // find safe spot
 			return;
-		}
 
 		for(int i = 0; i < boardForAI.length; i++) {  // go over rows
 			for(int j = 0; j < boardForAI[0].length; j++) {  // go over cells
@@ -337,9 +339,6 @@ public class Board {
 				}
 			}			
 		}
-		
-		printBoard(2);
-		nextStep();
 	}
 	
 	
@@ -386,7 +385,12 @@ public class Board {
 	
 	// maker spot with certain risk
 	// risk: 100 mine, 0 for not mine, 50 for 1 hint two spots
-	void markSurroundingSpots(int rowIndex, int colIndex, int risk) {	
+	// after finishing marking surrounding spots, search around the newly updated spot 
+	void markSurroundingSpots(int rowIndex, int colIndex, int risk) {
+		// array to hold the position info of the newly updated spots. maximum 8 spots
+		int[] updatedSpots = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,-1, -1, -1, -1};
+		int pos = 0;
+		
 		for(int i = rowIndex-1; i <= rowIndex + 1; i++) {  //surrounding rows
 			if(i < 0 || i >= boardForAI.length)  //out of boundary
 				continue;
@@ -396,11 +400,19 @@ public class Board {
 					continue;
 				if(boardForAI[i][j][1] == 0 && boardForAI[i][j][0] == -1)  { // unvisited spot risk not assigned
 					boardForAI[i][j][0] = risk;
+					updatedSpots[pos++] = i;
+					updatedSpots[pos++] = j;
+					
 					storeSaftestSpot(i, j);
 				}
 			}
 		}
-		searchAround(rowIndex, colIndex);
+		// check each newly updated spots
+		for(int i = 0; i < updatedSpots.length; i++) {
+			if(updatedSpots[i] == -1)  // no more entry
+				break;
+			searchAround(updatedSpots[i++], updatedSpots[i]);  // check each spot
+		}
 	}
 
 
@@ -606,8 +618,7 @@ public class Board {
 		}
 	}
 
-
-	// suggest next step
+	// suggest next step and take action if auto-solve is on
 	void nextStep() {
 		if( safeSpot[2] != 0 ) {  // not 100% safe
 			if(safeSpot[2] > 20)  // based on experience
@@ -621,11 +632,19 @@ public class Board {
 			System.out.printf("One safe move is:%d-%d, with the risk of: %d\n", 
 					safeSpot[0], safeSpot[1], safeSpot[2]);
 			
-// the section below is for test. comment it to allow user to select next move, even for safe move.
-			int i = safeSpot[0];
-			int j = safeSpot[1];
-			updateBoard(i, j, 0);
+			if(autoSolve) {
+				int i = safeSpot[0];
+				int j = safeSpot[1];
+				updateBoard(i, j, 0);
+			}
 		}
+	}
+	
+	// turn auto-solve on or off
+	void toggleAutoSolve(){
+		autoSolve = !autoSolve;
+		String status = autoSolve? "on" : "off";
+		System.out.printf("Auto-solve is: %s\n", status);
 	}
 	
 }

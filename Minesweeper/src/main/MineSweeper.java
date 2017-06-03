@@ -32,14 +32,20 @@ public class MineSweeper {
 
 		String pattern = "^[ ]*[sSfF]?[ ]*[0-9]{1,2}[ ]+[0-9]{1,2}[ ]*$";
 		String help = "^[ ]*[hH]{1}[ ]*$";
-		String AI = "^[ ]*[sS]{1}[ ]*$";
+		String Suggest = "^[ ]*[sS]{1}[ ]*$";
+		String autoSolve = "^[ ]*[aA]{1}[ ]*$";
 		
 		while(sc.hasNextLine()) {
 			String input = sc.nextLine();
 			if(input.matches(help) )
 				help();
-			else if(input.matches(AI))
+			
+			else if(input.matches(Suggest))
 				newBoard.printBoard(2);
+			
+			else if(input.matches(autoSolve))
+				newBoard.toggleAutoSolve();
+			
 			else if(input.matches(pattern)) {
 				processInput(input, cmd);
 				int result = newBoard.updateBoard(cmd[0], cmd[1], cmd[2]);
@@ -61,9 +67,10 @@ public class MineSweeper {
 	static void help(){
 		System.out.println(
 			"The board will show in the terminal\n" + 
-			"input row index and column index (with space in between) to open the spot. e.g.: 2 6\n" +
-			"add 'f' at the beginning if want to flag the spot. e.g.: f 2 6\n"+
-			"press 's' to ask AI give suggestions for next move."
+			"input row index and column index (with space in between) to open the spot. e.g.: 2 6.\n" +
+			"add 'f' at the beginning if want to flag the spot. e.g.: f 2 6.\n"+
+			"press 's' to ask AI give suggestions for next move.\n" +
+			"press 'a' to toggle AI auto-solve. By default auso-solve is off.\n"
 				);
 	}
 	

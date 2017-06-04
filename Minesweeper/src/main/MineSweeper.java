@@ -32,7 +32,8 @@ public class MineSweeper {
 
 		String pattern = "^[ ]*[sSfF]?[ ]*[0-9]{1,2}[ ]+[0-9]{1,2}[ ]*$";
 		String help = "^[ ]*[hH]{1}[ ]*$";
-		String Suggest = "^[ ]*[sS]{1}[ ]*$";
+		String suggest = "^[ ]*[sS]{1}[ ]*$";
+		String restart = "^[ ]*[rR]{1}[ ]*$";
 		String autoSolve = "^[ ]*[aA]{1}[ ]*$";
 		
 		while(sc.hasNextLine()) {
@@ -40,8 +41,11 @@ public class MineSweeper {
 			if(input.matches(help) )
 				help();
 			
-			else if(input.matches(Suggest))
+			else if(input.matches(suggest))
 				newBoard.printBoard(2);
+			
+			else if(input.matches(restart))
+				restart(newBoard, sc);
 			
 			else if(input.matches(autoSolve))
 				newBoard.toggleAutoSolve();
@@ -66,11 +70,12 @@ public class MineSweeper {
 	// game instruction
 	static void help(){
 		System.out.println(
-			"The board will show in the terminal\n" + 
-			"input row index and column index (with space in between) to open the spot. e.g.: 2 6.\n" +
-			"add 'f' at the beginning if want to flag the spot. e.g.: f 2 6.\n"+
-			"press 's' to ask AI give suggestions for next move.\n" +
-			"press 'a' to toggle AI auto-solve. By default auso-solve is off.\n"
+			"- The board will show in the terminal\n" + 
+			"- input row index and column index (with space in between) to open the spot. e.g.: 2 6.\n" +
+			"- add 'f' at the beginning if want to flag the spot. e.g.: f 2 6.\n"+
+			"- press 's' to ask AI give suggestions for next move.\n" +
+			"- press 'r' to restart the game.\n" +
+			"- press 'a' to toggle AI auto-solve. By default auso-solve is off.\n"
 				);
 	}
 	
@@ -119,7 +124,7 @@ public class MineSweeper {
 
 	// ask if user want to restart
 	static void restart(Board board, Scanner input) {
-		System.out.println("Play again? y/n");
+		System.out.println("Restart the game? y/n");
 		String pattern = "^[yYnN]{1}$";
 
 		int level = 0;

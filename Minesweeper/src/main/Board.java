@@ -16,12 +16,12 @@ import java.util.Random;
 //   -> scan the board to find easy mines or exclude a spot to be a mine, 
 //       or two spots that definitely contains one mine in them.
 //   -> mark the spot with corresponding risk like 100 or 0 or 50, 
-//      search around that spot to see if we can find more new cases.
+//      search around that spot to see if we can find more new cases based on this information.
 //   -> the above process happens recursively to find more mines.
 //   -> If above process ends with no confirmed safe spot, do normal evaluation, which is
 //      not accurate (sometimes misleading) but most of the time helpful.
 //
-//  Over all this AI works quite well, despite sometimes you got fake 0 risk spots. Have fun!
+//  Over all this AI works quite well. Have fun!
 // **************************************************************************************************************
 
 public class Board {

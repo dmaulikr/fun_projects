@@ -1,0 +1,670 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1BB344F39D0A7F0298F8FA4A /* Pods_Fishing_Assistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C234B6F9ECEF202CB93E9F6 /* Pods_Fishing_Assistant.framework */; };
+		4E0734E01F1EDDAB00FFF146 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0734DF1F1EDDAB00FFF146 /* AppDelegate.swift */; };
+		4E0734E21F1EDDAB00FFF146 /* MainPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0734E11F1EDDAB00FFF146 /* MainPageVC.swift */; };
+		4E0734E51F1EDDAB00FFF146 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E0734E31F1EDDAB00FFF146 /* Main.storyboard */; };
+		4E0734E71F1EDDAB00FFF146 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E0734E61F1EDDAB00FFF146 /* Assets.xcassets */; };
+		4E0734EA1F1EDDAB00FFF146 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E0734E81F1EDDAB00FFF146 /* LaunchScreen.storyboard */; };
+		4E0734F51F1EDDAC00FFF146 /* Fishing_AssistantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0734F41F1EDDAC00FFF146 /* Fishing_AssistantTests.swift */; };
+		4E0735001F1EDDAC00FFF146 /* Fishing_AssistantUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0734FF1F1EDDAC00FFF146 /* Fishing_AssistantUITests.swift */; };
+		4E07350F1F1EE0EB00FFF146 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E07350E1F1EE0EB00FFF146 /* MapKit.framework */; };
+		4E92E9601F2CC5D900E0EE2C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E95F1F2CC5D900E0EE2C /* Persistence.swift */; };
+		4E92E9621F2CC5F200E0EE2C /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E9611F2CC5F200E0EE2C /* Misc.swift */; };
+		4E92E9641F2CC60900E0EE2C /* CatchHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E9631F2CC60900E0EE2C /* CatchHistoryModel.swift */; };
+		4E92E9661F2CC62000E0EE2C /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E9651F2CC62000E0EE2C /* Protocols.swift */; };
+		4E92E96A1F2D4C4300E0EE2C /* DetailEditingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E9691F2D4C4300E0EE2C /* DetailEditingVC.swift */; };
+		4E92E96E1F2D4CB100E0EE2C /* SuggestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E96D1F2D4CB100E0EE2C /* SuggestionVC.swift */; };
+		4E92E9701F2D659C00E0EE2C /* CatchListTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E96F1F2D659C00E0EE2C /* CatchListTabBarVC.swift */; };
+		4E92E9721F2D65BD00E0EE2C /* CatchListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E9711F2D65BD00E0EE2C /* CatchListVC.swift */; };
+		4E92E9761F2E072E00E0EE2C /* DetailEditingViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E9751F2E072E00E0EE2C /* DetailEditingViewState.swift */; };
+		4E92E9781F2E1E8F00E0EE2C /* NetworkModelAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E9771F2E1E8F00E0EE2C /* NetworkModelAdaptor.swift */; };
+		4E92E97A1F2E747C00E0EE2C /* MainPageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E92E9791F2E747C00E0EE2C /* MainPageState.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4E0734F11F1EDDAC00FFF146 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4E0734D41F1EDDAB00FFF146 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4E0734DB1F1EDDAB00FFF146;
+			remoteInfo = "Fishing Assistant";
+		};
+		4E0734FC1F1EDDAC00FFF146 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4E0734D41F1EDDAB00FFF146 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4E0734DB1F1EDDAB00FFF146;
+			remoteInfo = "Fishing Assistant";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0C234B6F9ECEF202CB93E9F6 /* Pods_Fishing_Assistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fishing_Assistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A78EB0EC0544D1C42092077 /* Pods-Fishing Assistant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fishing Assistant.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fishing Assistant/Pods-Fishing Assistant.debug.xcconfig"; sourceTree = "<group>"; };
+		4E0734DC1F1EDDAB00FFF146 /* Fishing Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fishing Notes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E0734DF1F1EDDAB00FFF146 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4E0734E11F1EDDAB00FFF146 /* MainPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageVC.swift; sourceTree = "<group>"; };
+		4E0734E41F1EDDAB00FFF146 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4E0734E61F1EDDAB00FFF146 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4E0734E91F1EDDAB00FFF146 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4E0734EB1F1EDDAB00FFF146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4E0734F01F1EDDAC00FFF146 /* Fishing NotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fishing NotesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E0734F41F1EDDAC00FFF146 /* Fishing_AssistantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fishing_AssistantTests.swift; sourceTree = "<group>"; };
+		4E0734F61F1EDDAC00FFF146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4E0734FB1F1EDDAC00FFF146 /* Fishing NotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fishing NotesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E0734FF1F1EDDAC00FFF146 /* Fishing_AssistantUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fishing_AssistantUITests.swift; sourceTree = "<group>"; };
+		4E0735011F1EDDAC00FFF146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4E07350E1F1EE0EB00FFF146 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4E92E95F1F2CC5D900E0EE2C /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		4E92E9611F2CC5F200E0EE2C /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
+		4E92E9631F2CC60900E0EE2C /* CatchHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatchHistoryModel.swift; sourceTree = "<group>"; };
+		4E92E9651F2CC62000E0EE2C /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		4E92E9691F2D4C4300E0EE2C /* DetailEditingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailEditingVC.swift; sourceTree = "<group>"; };
+		4E92E96D1F2D4CB100E0EE2C /* SuggestionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionVC.swift; sourceTree = "<group>"; };
+		4E92E96F1F2D659C00E0EE2C /* CatchListTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatchListTabBarVC.swift; sourceTree = "<group>"; };
+		4E92E9711F2D65BD00E0EE2C /* CatchListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatchListVC.swift; sourceTree = "<group>"; };
+		4E92E9751F2E072E00E0EE2C /* DetailEditingViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailEditingViewState.swift; sourceTree = "<group>"; };
+		4E92E9771F2E1E8F00E0EE2C /* NetworkModelAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkModelAdaptor.swift; sourceTree = "<group>"; };
+		4E92E9791F2E747C00E0EE2C /* MainPageState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPageState.swift; sourceTree = "<group>"; };
+		848C7D5C65ADFAA8966B385F /* Pods-Fishing Assistant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fishing Assistant.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fishing Assistant/Pods-Fishing Assistant.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4E0734D91F1EDDAB00FFF146 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E07350F1F1EE0EB00FFF146 /* MapKit.framework in Frameworks */,
+				1BB344F39D0A7F0298F8FA4A /* Pods_Fishing_Assistant.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E0734ED1F1EDDAC00FFF146 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E0734F81F1EDDAC00FFF146 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		09C6EB140CD83E7568C1BE86 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1A78EB0EC0544D1C42092077 /* Pods-Fishing Assistant.debug.xcconfig */,
+				848C7D5C65ADFAA8966B385F /* Pods-Fishing Assistant.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4E0734D31F1EDDAB00FFF146 = {
+			isa = PBXGroup;
+			children = (
+				4E0734DE1F1EDDAB00FFF146 /* Fishing Assistant */,
+				4E0734F31F1EDDAC00FFF146 /* Fishing AssistantTests */,
+				4E0734FE1F1EDDAC00FFF146 /* Fishing AssistantUITests */,
+				4E0734DD1F1EDDAB00FFF146 /* Products */,
+				4E07350D1F1EE0EB00FFF146 /* Frameworks */,
+				09C6EB140CD83E7568C1BE86 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		4E0734DD1F1EDDAB00FFF146 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4E0734DC1F1EDDAB00FFF146 /* Fishing Notes.app */,
+				4E0734F01F1EDDAC00FFF146 /* Fishing NotesTests.xctest */,
+				4E0734FB1F1EDDAC00FFF146 /* Fishing NotesUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4E0734DE1F1EDDAB00FFF146 /* Fishing Assistant */ = {
+			isa = PBXGroup;
+			children = (
+				4E0734DF1F1EDDAB00FFF146 /* AppDelegate.swift */,
+				4E92E9651F2CC62000E0EE2C /* Protocols.swift */,
+				4E92E9631F2CC60900E0EE2C /* CatchHistoryModel.swift */,
+				4E0734E11F1EDDAB00FFF146 /* MainPageVC.swift */,
+				4E92E9791F2E747C00E0EE2C /* MainPageState.swift */,
+				4E92E9691F2D4C4300E0EE2C /* DetailEditingVC.swift */,
+				4E92E9751F2E072E00E0EE2C /* DetailEditingViewState.swift */,
+				4E92E96F1F2D659C00E0EE2C /* CatchListTabBarVC.swift */,
+				4E92E9711F2D65BD00E0EE2C /* CatchListVC.swift */,
+				4E92E96D1F2D4CB100E0EE2C /* SuggestionVC.swift */,
+				4E0734E31F1EDDAB00FFF146 /* Main.storyboard */,
+				4E0734E61F1EDDAB00FFF146 /* Assets.xcassets */,
+				4E0734E81F1EDDAB00FFF146 /* LaunchScreen.storyboard */,
+				4E0734EB1F1EDDAB00FFF146 /* Info.plist */,
+				4E92E9771F2E1E8F00E0EE2C /* NetworkModelAdaptor.swift */,
+				4E92E95F1F2CC5D900E0EE2C /* Persistence.swift */,
+				4E92E9611F2CC5F200E0EE2C /* Misc.swift */,
+			);
+			path = "Fishing Assistant";
+			sourceTree = "<group>";
+		};
+		4E0734F31F1EDDAC00FFF146 /* Fishing AssistantTests */ = {
+			isa = PBXGroup;
+			children = (
+				4E0734F41F1EDDAC00FFF146 /* Fishing_AssistantTests.swift */,
+				4E0734F61F1EDDAC00FFF146 /* Info.plist */,
+			);
+			path = "Fishing AssistantTests";
+			sourceTree = "<group>";
+		};
+		4E0734FE1F1EDDAC00FFF146 /* Fishing AssistantUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4E0734FF1F1EDDAC00FFF146 /* Fishing_AssistantUITests.swift */,
+				4E0735011F1EDDAC00FFF146 /* Info.plist */,
+			);
+			path = "Fishing AssistantUITests";
+			sourceTree = "<group>";
+		};
+		4E07350D1F1EE0EB00FFF146 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4E07350E1F1EE0EB00FFF146 /* MapKit.framework */,
+				0C234B6F9ECEF202CB93E9F6 /* Pods_Fishing_Assistant.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4E0734DB1F1EDDAB00FFF146 /* Fishing Notes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E0735041F1EDDAC00FFF146 /* Build configuration list for PBXNativeTarget "Fishing Notes" */;
+			buildPhases = (
+				F71CD7236DDC3842CA453B9B /* [CP] Check Pods Manifest.lock */,
+				4E0734D81F1EDDAB00FFF146 /* Sources */,
+				4E0734D91F1EDDAB00FFF146 /* Frameworks */,
+				4E0734DA1F1EDDAB00FFF146 /* Resources */,
+				B7AD6F78E4EAD1B0D8A59B11 /* [CP] Embed Pods Frameworks */,
+				6B7BC6F9A3477EC099EDD0B8 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Fishing Notes";
+			productName = "Fishing Assistant";
+			productReference = 4E0734DC1F1EDDAB00FFF146 /* Fishing Notes.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4E0734EF1F1EDDAC00FFF146 /* Fishing NotesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E0735071F1EDDAC00FFF146 /* Build configuration list for PBXNativeTarget "Fishing NotesTests" */;
+			buildPhases = (
+				4E0734EC1F1EDDAC00FFF146 /* Sources */,
+				4E0734ED1F1EDDAC00FFF146 /* Frameworks */,
+				4E0734EE1F1EDDAC00FFF146 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4E0734F21F1EDDAC00FFF146 /* PBXTargetDependency */,
+			);
+			name = "Fishing NotesTests";
+			productName = "Fishing AssistantTests";
+			productReference = 4E0734F01F1EDDAC00FFF146 /* Fishing NotesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4E0734FA1F1EDDAC00FFF146 /* Fishing NotesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E07350A1F1EDDAC00FFF146 /* Build configuration list for PBXNativeTarget "Fishing NotesUITests" */;
+			buildPhases = (
+				4E0734F71F1EDDAC00FFF146 /* Sources */,
+				4E0734F81F1EDDAC00FFF146 /* Frameworks */,
+				4E0734F91F1EDDAC00FFF146 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4E0734FD1F1EDDAC00FFF146 /* PBXTargetDependency */,
+			);
+			name = "Fishing NotesUITests";
+			productName = "Fishing AssistantUITests";
+			productReference = 4E0734FB1F1EDDAC00FFF146 /* Fishing NotesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4E0734D41F1EDDAB00FFF146 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "litao chen";
+				TargetAttributes = {
+					4E0734DB1F1EDDAB00FFF146 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 7Q4YKAYX46;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					4E0734EF1F1EDDAC00FFF146 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 7Q4YKAYX46;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4E0734DB1F1EDDAB00FFF146;
+					};
+					4E0734FA1F1EDDAC00FFF146 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 7Q4YKAYX46;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4E0734DB1F1EDDAB00FFF146;
+					};
+				};
+			};
+			buildConfigurationList = 4E0734D71F1EDDAB00FFF146 /* Build configuration list for PBXProject "Fishing Notes" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4E0734D31F1EDDAB00FFF146;
+			productRefGroup = 4E0734DD1F1EDDAB00FFF146 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4E0734DB1F1EDDAB00FFF146 /* Fishing Notes */,
+				4E0734EF1F1EDDAC00FFF146 /* Fishing NotesTests */,
+				4E0734FA1F1EDDAC00FFF146 /* Fishing NotesUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4E0734DA1F1EDDAB00FFF146 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E0734EA1F1EDDAB00FFF146 /* LaunchScreen.storyboard in Resources */,
+				4E0734E71F1EDDAB00FFF146 /* Assets.xcassets in Resources */,
+				4E0734E51F1EDDAB00FFF146 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E0734EE1F1EDDAC00FFF146 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E0734F91F1EDDAC00FFF146 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6B7BC6F9A3477EC099EDD0B8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fishing Assistant/Pods-Fishing Assistant-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B7AD6F78E4EAD1B0D8A59B11 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fishing Assistant/Pods-Fishing Assistant-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F71CD7236DDC3842CA453B9B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4E0734D81F1EDDAB00FFF146 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E92E96A1F2D4C4300E0EE2C /* DetailEditingVC.swift in Sources */,
+				4E92E9601F2CC5D900E0EE2C /* Persistence.swift in Sources */,
+				4E92E97A1F2E747C00E0EE2C /* MainPageState.swift in Sources */,
+				4E92E9721F2D65BD00E0EE2C /* CatchListVC.swift in Sources */,
+				4E92E9761F2E072E00E0EE2C /* DetailEditingViewState.swift in Sources */,
+				4E92E9781F2E1E8F00E0EE2C /* NetworkModelAdaptor.swift in Sources */,
+				4E92E9701F2D659C00E0EE2C /* CatchListTabBarVC.swift in Sources */,
+				4E92E96E1F2D4CB100E0EE2C /* SuggestionVC.swift in Sources */,
+				4E92E9621F2CC5F200E0EE2C /* Misc.swift in Sources */,
+				4E0734E21F1EDDAB00FFF146 /* MainPageVC.swift in Sources */,
+				4E92E9661F2CC62000E0EE2C /* Protocols.swift in Sources */,
+				4E92E9641F2CC60900E0EE2C /* CatchHistoryModel.swift in Sources */,
+				4E0734E01F1EDDAB00FFF146 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E0734EC1F1EDDAC00FFF146 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E0734F51F1EDDAC00FFF146 /* Fishing_AssistantTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E0734F71F1EDDAC00FFF146 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E0735001F1EDDAC00FFF146 /* Fishing_AssistantUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4E0734F21F1EDDAC00FFF146 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4E0734DB1F1EDDAB00FFF146 /* Fishing Notes */;
+			targetProxy = 4E0734F11F1EDDAC00FFF146 /* PBXContainerItemProxy */;
+		};
+		4E0734FD1F1EDDAC00FFF146 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4E0734DB1F1EDDAB00FFF146 /* Fishing Notes */;
+			targetProxy = 4E0734FC1F1EDDAC00FFF146 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4E0734E31F1EDDAB00FFF146 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4E0734E41F1EDDAB00FFF146 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4E0734E81F1EDDAB00FFF146 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4E0734E91F1EDDAB00FFF146 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4E0735021F1EDDAC00FFF146 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4E0735031F1EDDAC00FFF146 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4E0735051F1EDDAC00FFF146 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A78EB0EC0544D1C42092077 /* Pods-Fishing Assistant.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7Q4YKAYX46;
+				INFOPLIST_FILE = "Fishing Assistant/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.harvard.csci-s65.Fishing-Assistant";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		4E0735061F1EDDAC00FFF146 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 848C7D5C65ADFAA8966B385F /* Pods-Fishing Assistant.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7Q4YKAYX46;
+				INFOPLIST_FILE = "Fishing Assistant/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.harvard.csci-s65.Fishing-Assistant";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		4E0735081F1EDDAC00FFF146 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7Q4YKAYX46;
+				INFOPLIST_FILE = "Fishing AssistantTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.harvard.csci-s65.Fishing-AssistantTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fishing Notes.app/Fishing Notes";
+			};
+			name = Debug;
+		};
+		4E0735091F1EDDAC00FFF146 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7Q4YKAYX46;
+				INFOPLIST_FILE = "Fishing AssistantTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.harvard.csci-s65.Fishing-AssistantTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fishing Notes.app/Fishing Notes";
+			};
+			name = Release;
+		};
+		4E07350B1F1EDDAC00FFF146 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 7Q4YKAYX46;
+				INFOPLIST_FILE = "Fishing AssistantUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.harvard.csci-s65.Fishing-AssistantUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "Fishing Assistant";
+			};
+			name = Debug;
+		};
+		4E07350C1F1EDDAC00FFF146 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 7Q4YKAYX46;
+				INFOPLIST_FILE = "Fishing AssistantUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.harvard.csci-s65.Fishing-AssistantUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "Fishing Assistant";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E0734D71F1EDDAB00FFF146 /* Build configuration list for PBXProject "Fishing Notes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E0735021F1EDDAC00FFF146 /* Debug */,
+				4E0735031F1EDDAC00FFF146 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E0735041F1EDDAC00FFF146 /* Build configuration list for PBXNativeTarget "Fishing Notes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E0735051F1EDDAC00FFF146 /* Debug */,
+				4E0735061F1EDDAC00FFF146 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E0735071F1EDDAC00FFF146 /* Build configuration list for PBXNativeTarget "Fishing NotesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E0735081F1EDDAC00FFF146 /* Debug */,
+				4E0735091F1EDDAC00FFF146 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E07350A1F1EDDAC00FFF146 /* Build configuration list for PBXNativeTarget "Fishing NotesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E07350B1F1EDDAC00FFF146 /* Debug */,
+				4E07350C1F1EDDAC00FFF146 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4E0734D41F1EDDAB00FFF146 /* Project object */;
+}
